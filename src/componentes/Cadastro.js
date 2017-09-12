@@ -27,6 +27,26 @@ export default class CadastroBox extends Component {
     }
 
     componentDidMount() {
+        var that = this;
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 100, // Creates a dropdown of 15 years to control year,
+            max: new Date(),
+            format: 'dd/mm/yyyy',
+            today: 'Hoje',
+            clear: 'Limpar',
+            close: 'Ok',
+            closeOnSelect: true, // Close upon selecting a date,
+            onClose: function () {
+                that.setState({dataNasc: this.get('value')});
+            }
+        });
+
+        $('#tipoCadastro').on('change', function (event) {
+            this.setState({tipoCadastro: event.target.value});
+        }.bind(this));
+
         $('select').material_select();
     }
 
@@ -34,8 +54,6 @@ export default class CadastroBox extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
-        console.log(target.type);
 
         this.setState({
             [name]: value
@@ -53,13 +71,14 @@ export default class CadastroBox extends Component {
             <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
                 <div className="row">
                     <div className="input-field col s6">
-                        <input id="nome" name="nome" type="text" className="validate"
+                        <input id="nome" name="nome" type="text"
                                value={this.state.nome}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="nome">Nome Completo</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="dataNasc" name="dataNasc" type="text" className="validate"
+                        <input id="dataNasc" name="dataNasc" type="text"
+                               className="datepicker"
                                value={this.state.dataNasc}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="dataNasc">Data Nascimento</label>
@@ -67,13 +86,13 @@ export default class CadastroBox extends Component {
                 </div>
                 <div className="row">
                     <div className="input-field col s6">
-                        <input id="cpf" name="cpf" type="text" className="validate"
+                        <input id="cpf" name="cpf" type="text"
                                value={this.state.cpf}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="cpf">CPF</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="endereco" name="endereco" type="text" className="validate"
+                        <input id="endereco" name="endereco" type="text"
                                value={this.state.endereco}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="endereco">Endereço</label>
@@ -81,19 +100,19 @@ export default class CadastroBox extends Component {
                 </div>
                 <div className="row">
                     <div className="input-field col s4">
-                        <input id="estado" name="estado" type="text" className="validate"
+                        <input id="estado" name="estado" type="text"
                                value={this.state.estado}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="estado">Estado</label>
                     </div>
                     <div className="input-field col s4">
-                        <input id="cidade" name="cidade" type="text" className="validate"
+                        <input id="cidade" name="cidade" type="text"
                                value={this.state.cidade}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="cidade">Cidade</label>
                     </div>
                     <div className="input-field col s4">
-                        <input id="cep" name="cep" type="text" className="validate"
+                        <input id="cep" name="cep" type="text"
                                value={this.state.cep}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="cep">Cep</label>
@@ -101,13 +120,13 @@ export default class CadastroBox extends Component {
                 </div>
                 <div className="row">
                     <div className="input-field col s6">
-                        <input id="email" name="email" type="email" className="validate"
+                        <input id="email" name="email" type="email"
                                value={this.state.email}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="email">Email</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="telefone" name="telefone" type="text" className="validate"
+                        <input id="telefone" name="telefone" type="text"
                                value={this.state.telefone}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="telefone">Telefone</label>
@@ -115,7 +134,7 @@ export default class CadastroBox extends Component {
                 </div>
                 <div className="row">
                     <div className="input-field col s6">
-                        <input id="senha" name="senha" type="password" className="validate"
+                        <input id="senha" name="senha" type="password"
                                value={this.state.senha}
                                onChange={this.handleInputChange}/>
                         <label htmlFor="senha">Senha</label>
