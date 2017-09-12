@@ -1,21 +1,41 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import $ from 'jquery';
+import 'materialize-css';
+import 'materialize-css/dist/css/materialize.min.css';
+import {Link} from 'react-router';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+
+    componentDidMount() {
+        $(".button-collapse").sideNav();
+    }
+
+    render() {
+        return (
+            <div className="row">
+                <nav>
+                    <div className="nav-wrapper">
+                        <div className="col s12">
+                            <Link to="/" className="brand-logo">Academia ABC</Link>
+                            <a data-activates="menu-mobile" className="button-collapse">
+                                <i className="material-icons">menu</i>
+                            </a>
+                            <ul id="nav-mobile" className="right hide-on-med-and-down">
+                                <li><Link to="/cadastro">Cadastro</Link></li>
+                            </ul>
+                            <ul id="menu-mobile" className="side-nav">
+                                <li><Link to="/cadastro">Cadastro</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div className="main col s12">
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
