@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
+import {browserHistory} from 'react-router';
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 
@@ -68,7 +69,7 @@ export default class CadastroBox extends Component {
             body: JSON.stringify(this.state),
             headers: new Headers({
                 'Content-type': 'application/json',
-                'Authorization': `Basic ${btoa('admin:admin')}`
+                'Authorization': `${localStorage.getItem('auth-token')}`,
             })
         };
 
@@ -76,10 +77,13 @@ export default class CadastroBox extends Component {
             .then(response => {
                 if (response.ok) {
                     return response.json();
+                }else {
+                    throw new Error("Token expirou");
                 }
+            })
+            .catch(error => {
+                browserHistory.push("/");
             });
-
-        console.log(this.state);
     }
 
     render() {
