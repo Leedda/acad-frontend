@@ -3,6 +3,7 @@ import $ from 'jquery';
 import {browserHistory} from 'react-router';
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
+import Inputmask from "inputmask";
 
 class CadastroFormulario extends Component {
 
@@ -35,7 +36,7 @@ class CadastroFormulario extends Component {
     }
 
     componentDidMount() {
-        var that = this;
+        let that = this;
 
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
@@ -136,9 +137,8 @@ class CadastroFormulario extends Component {
     }
 
     render() {
-        $(document).ready(function () {
-            $('select').material_select();
-        });
+        let im = new Inputmask("999.999.999-99");
+        im.mask($('#cpf'));
         return (
             <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
                 {
