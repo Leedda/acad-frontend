@@ -15,7 +15,7 @@ function verificaAutenticacao(nextState, replace) {
     const enderecoPrivadoTimeline = resultado.paramValues[0] === undefined;
 
     if (enderecoPrivadoTimeline && localStorage.getItem('auth-token') === null) {
-        replace("/");
+        replace("?msg=Você precisa estar logado para acessar o endereço");
     }
 }
 

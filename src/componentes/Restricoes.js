@@ -8,6 +8,8 @@ export default class RestricoesBox extends Component {
 
         this.state = {
             descricao: '',
+            msgSucesso: '',
+            msgErro: ''
         };
 
         this.baseState = this.state;
@@ -36,7 +38,7 @@ export default class RestricoesBox extends Component {
 
         const requestInfo = {
             method: 'POST',
-            body: JSON.stringify(this.state),
+            body: JSON.stringify({descricao: this.state.descricao}),
             headers: new Headers({
                 'Content-type': 'application/json',
                 'Authorization': `${localStorage.getItem('auth-token')}`,
@@ -47,19 +49,37 @@ export default class RestricoesBox extends Component {
             .then(response => {
                 if (response.ok) {
                     this.resetForm();
+                    this.setState({msgSucesso: 'Restrição salva com sucesso.'});
                     return response.json();
                 } else {
-                    throw new Error("Token expirou");
+                    throw new Error("Não foi possível realizar o cadastro.");
                 }
             })
             .catch(error => {
-                browserHistory.push("/");
+                if (localStorage.getItem('auth-token')) {
+                    this.setState({msgErro: error.message})
+                } else {
+                    browserHistory.push("/?msg=Seu tempo de login expirou");
+                }
             });
     }
 
     render() {
         return (
             <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
+                {
+                    this.state.msgErro.length > 0 &&
+                    <div className="card-panel red lighten-1">
+                        <span className="white-text">{this.state.msgErro}</span>
+                    </div>
+                }
+                {
+                    this.state.msgSucesso.length > 0 &&
+                    <div className="card-panel green lighten-1">
+                        <span className="white-text">{this.state.msgSucesso}</span>
+                    </div>
+                }
+
                 <div className="row">
                     <div className="input-field col s6">
                         <input id="descricao" name="descricao" type="text"

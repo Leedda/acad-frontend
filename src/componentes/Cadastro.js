@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import {browserHistory} from 'react-router';
 import 'materialize-css';
@@ -22,7 +21,9 @@ class CadastroFormulario extends Component {
             telefone: '',
             senha: '',
             tipoCadastro: 'cliente',
-            restricoes: []
+            restricoes: [],
+            msgErro: '',
+            msgSucesso: ''
         };
 
         this.baseState = this.state;
@@ -30,6 +31,7 @@ class CadastroFormulario extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.enviaForm = this.enviaForm.bind(this);
         this.resetForm = this.resetForm.bind(this);
+        this.formSubmitInfo = this.formSubmitInfo.bind(this);
     }
 
     componentDidMount() {
@@ -83,12 +85,31 @@ class CadastroFormulario extends Component {
         this.setState(this.baseState);
     }
 
+    formSubmitInfo() {
+        let data = {
+            nome: this.state.nome,
+            dataNasc: this.state.dataNasc,
+            cpf: this.state.cpf,
+            endereco: this.state.endereco,
+            estado: this.state.estado,
+            cidade: this.state.cidade,
+            cep: this.state.cep,
+            email: this.state.email,
+            telefone: this.state.telefone,
+            senha: this.state.senha,
+            tipoCadastro: this.state.tipoCadastro,
+            restricoes: this.state.restricoes
+        };
+
+        return data;
+    }
+
     enviaForm(event) {
         event.preventDefault();
 
         const requestInfo = {
             method: 'POST',
-            body: JSON.stringify(this.state),
+            body: JSON.stringify(this.formSubmitInfo()),
             headers: new Headers({
                 'Content-type': 'application/json',
                 'Authorization': `${localStorage.getItem('auth-token')}`,
@@ -99,13 +120,18 @@ class CadastroFormulario extends Component {
             .then(response => {
                 if (response.ok) {
                     this.resetForm();
+                    this.setState({msgSucesso: 'Cadastro realizado com sucesso.'});
                     return response.json();
                 } else {
-                    throw new Error("Token expirou");
+                    throw new Error("Não foi possível realizar o cadastro.");
                 }
             })
             .catch(error => {
-                browserHistory.push("/");
+                if (localStorage.getItem('auth-token')) {
+                    this.setState({msgErro: error.message})
+                } else {
+                    browserHistory.push("/?msg=Seu tempo de login expirou");
+                }
             });
     }
 
@@ -115,6 +141,19 @@ class CadastroFormulario extends Component {
         });
         return (
             <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
+                {
+                    this.state.msgErro.length > 0 &&
+                    <div className="card-panel red lighten-1">
+                        <span className="white-text">{this.state.msgErro}</span>
+                    </div>
+                }
+                {
+                    this.state.msgSucesso.length > 0 &&
+                    <div className="card-panel green lighten-1">
+                        <span className="white-text">{this.state.msgSucesso}</span>
+                    </div>
+                }
+
                 <div className="row">
                     <div className="input-field col s6">
                         <input id="nome" name="nome" type="text"
