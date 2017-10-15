@@ -257,7 +257,8 @@ class CadastroFormulario extends Component {
                     <div className="input-field col s4">
                         <input id="senha" name="senha" type="password"
                                value={this.state.senha}
-                               onChange={this.handleInputChange} required/>
+                               onChange={this.handleInputChange} required
+                               disabled={this.state.tipoCadastro == 'cliente' ? 'disabled' : ''}/>
                         <label htmlFor="senha">Senha</label>
                     </div>
                 </div>
