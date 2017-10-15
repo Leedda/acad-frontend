@@ -242,27 +242,28 @@ class CadastroFormulario extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="input-field col s6">
+                    <div className="input-field col s4">
                         <input id="email" name="email" type="email"
                                value={this.state.email}
                                onChange={this.handleInputChange} required/>
                         <label htmlFor="email">Email</label>
                     </div>
-                    <div className="input-field col s6">
+                    <div className="input-field col s4">
                         <input id="telefone" name="telefone" type="text"
                                value={this.state.telefone}
                                onChange={this.handleInputChange} required/>
                         <label htmlFor="telefone">Telefone</label>
                     </div>
-                </div>
-                <div className="row">
                     <div className="input-field col s4">
                         <input id="senha" name="senha" type="password"
                                value={this.state.senha}
-                               onChange={this.handleInputChange} required/>
+                               onChange={this.handleInputChange} required
+                               disabled={this.state.tipoCadastro == 'cliente' ? 'disabled' : ''}/>
                         <label htmlFor="senha">Senha</label>
                     </div>
-                    <div className="input-field col s4">
+                </div>
+                <div className="row">
+                    <div className="input-field col s6">
                         <select id="tipoCadastro" name="tipoCadastro" value={this.state.tipoCadastro}
                                 onChange={this.handleInputChange}>
                             <option value="cliente">Cliente</option>
@@ -270,7 +271,7 @@ class CadastroFormulario extends Component {
                         </select>
                         <label htmlFor="tipoCadastro">Tipo de cadastro</label>
                     </div>
-                    <div className="input-field col s4">
+                    <div className="input-field col s6">
                         <select id="restricoes" name="restricoes" value={this.state.restricoes}
                                 onChange={this.handleInputChange} multiple>
                             {
