@@ -6,6 +6,7 @@
     "inputmask": "^3.3.9",
     "jquery": "^3.2.1",
     "materialize-css": "^0.100.2",
+    "pubsub-js": "^1.5.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router": "^3.0.5",
