@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import PubSub from 'pubsub-js';
 import {browserHistory} from 'react-router';
 
-export default class RestricoesBox extends Component {
-
+class FormularioRestricoes extends Component {
     constructor(props) {
         super(props);
 
@@ -55,6 +55,9 @@ export default class RestricoesBox extends Component {
                     throw new Error("Não foi possível realizar o cadastro.");
                 }
             })
+            .then(body => {
+                PubSub.publish('atualiza-lista-restricoes', body);
+            })
             .catch(error => {
                 if (localStorage.getItem('auth-token')) {
                     this.setState({msgErro: error.message})
@@ -66,37 +69,151 @@ export default class RestricoesBox extends Component {
 
     render() {
         return (
-            <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
-                {
-                    this.state.msgErro.length > 0 &&
-                    <div className="card-panel red lighten-1">
-                        <span className="white-text">{this.state.msgErro}</span>
-                    </div>
-                }
-                {
-                    this.state.msgSucesso.length > 0 &&
-                    <div className="card-panel green lighten-1">
-                        <span className="white-text">{this.state.msgSucesso}</span>
-                    </div>
-                }
+            <div>
+                <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
+                    {
+                        this.state.msgErro.length > 0 &&
+                        <div className="card-panel red lighten-1">
+                            <span className="white-text">{this.state.msgErro}</span>
+                        </div>
+                    }
+                    {
+                        this.state.msgSucesso.length > 0 &&
+                        <div className="card-panel green lighten-1">
+                            <span className="white-text">{this.state.msgSucesso}</span>
+                        </div>
+                    }
 
-                <div className="row">
-                    <div className="input-field col s6">
-                        <input id="descricao" name="descricao" type="text"
-                               value={this.state.descricao}
-                               onChange={this.handleInputChange} required/>
-                        <label htmlFor="descricao">Descrição</label>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input id="descricao" name="descricao" type="text"
+                                   value={this.state.descricao}
+                                   onChange={this.handleInputChange} required/>
+                            <label htmlFor="descricao">Descrição</label>
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col s12">
-                        <button className="btn waves-effect waves-light" type="submit" name="action">Submit
-                            <i className="material-icons right">send</i>
-                        </button>
+                    <div className="row">
+                        <div className="col s12">
+                            <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+                                <i className="material-icons right">send</i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         )
     }
+}
+
+class TabelaRestricoes extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.removeRestricao = this.removeRestricao.bind(this);
+    }
+
+    removeRestricao(restricao) {
+        const requestInfo = {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-type': 'application/json',
+                'Authorization': `${localStorage.getItem('auth-token')}`,
+            })
+        };
+
+        fetch(`${restricao._links.self.href}`, requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    PubSub.publish('atualiza-lista-restricoes', 'asd');
+                } else {
+                    throw new Error("Não foi possível excluir uma restrição.");
+                }
+            })
+    }
+
+    render() {
+        return (
+            <div className="col s6 offset-s3">
+                <table className="pure-table">
+                    <thead>
+                    <tr>
+                        <th>Restrições</th>
+                        <th className="right-align">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.props.restricoes.map(function (restricao) {
+                            return (
+                                <tr key={restricao._links.self.href}>
+                                    <td>{restricao.descricao}</td>
+                                    <td className="right-align">
+                                        <i onClick={() => this.removeRestricao(restricao)}
+                                           className="material-icons red-text">delete</i>
+                                    </td>
+                                </tr>
+                            );
+                        }.bind(this))
+                    }
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+}
+
+
+export default class RestricoesBox extends Component {
+
+    constructor() {
+        super();
+        this.state = {restricoes: []};
+    }
+
+    componentDidMount() {
+        const requestInfo = {
+            method: 'GET',
+            headers: new Headers({
+                'Content-type': 'application/json',
+                'Authorization': `${localStorage.getItem('auth-token')}`,
+            })
+        };
+        fetch(`http://localhost:8080/restricoes`, requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Não foi possível buscar as restrições.");
+                }
+            })
+            .then(body => {
+                this.setState({restricoes: body._embedded.restricoes});
+            });
+
+        PubSub.subscribe('atualiza-lista-restricoes', function (topico, novaRestricao) {
+            fetch(`http://localhost:8080/restricoes`, requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Não foi possível buscar as restrições.");
+                    }
+                })
+                .then(body => {
+                    this.setState({restricoes: body._embedded.restricoes});
+                });
+        }.bind(this));
+    }
+
+    render() {
+        return (
+            <div>
+                <FormularioRestricoes/>
+                <TabelaRestricoes restricoes={this.state.restricoes}/>
+            </div>
+        );
+    }
+
 
 }
