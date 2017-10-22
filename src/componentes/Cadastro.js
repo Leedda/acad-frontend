@@ -102,7 +102,7 @@ class CadastroFormulario extends Component {
             cep: this.state.cep,
             email: this.state.email,
             telefone: this.state.telefone,
-            senha: this.state.senha,
+            senha: this.state.tipoCadastro === 'cliente' ? 'null' : this.state.senha,
             tipoCadastro: this.state.tipoCadastro,
             restricoes: this.state.restricoes
         };
@@ -256,9 +256,9 @@ class CadastroFormulario extends Component {
                     </div>
                     <div className="input-field col s4">
                         <input id="senha" name="senha" type="password"
-                               value={this.state.tipoCadastro == 'cliente' ? 'null' : this.state.senha}
+                               value={this.state.tipoCadastro === 'cliente' ? '' : this.state.senha}
                                onChange={this.handleInputChange} required
-                               disabled={this.state.tipoCadastro == 'cliente' ? 'disabled' : ''}/>
+                               disabled={this.state.tipoCadastro === 'cliente' ? 'disabled' : ''}/>
                         <label htmlFor="senha">Senha</label>
                     </div>
                 </div>
