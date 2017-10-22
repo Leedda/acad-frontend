@@ -18,6 +18,14 @@ export default class Header extends Component {
                         <ul id="menu-mobile" className="side-nav">
                             <li><Link to="/academia/logout">Logout</Link></li>
                         </ul>
+
+                        <ul id="nav-mobile" className="right hide-on-med-and-down">
+                            <li><Link to="/academia/matricula">Matrícula</Link></li>
+                        </ul>
+                        <ul id="menu-mobile" className="side-nav">
+                            <li><Link to="/academia/matricula">Matrícula</Link></li>
+                        </ul>
+
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><Link to="/academia/restricoes">Restrições</Link></li>
                         </ul>
