@@ -6,6 +6,7 @@ import Home from './componentes/Home';
 import CadastroBox from './componentes/Cadastro';
 import RestricoesBox from './componentes/Restricoes';
 import MatriculaBox from './componentes/Matricula';
+import FuncionarioBox from './componentes/Funcionario';
 import Logout from './componentes/Logout';
 import registerServiceWorker from './registerServiceWorker';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
@@ -28,6 +29,7 @@ ReactDOM.render(
             <Route path="cadastro" component={CadastroBox}/>
             <Route path="restricoes" component={RestricoesBox}/>
             <Route path="matricula" component={MatriculaBox}/>
+            <Route path="funcionario" component={FuncionarioBox}/>
             <Route path="logout" component={Logout}/>
         </Route>
     </Router>,

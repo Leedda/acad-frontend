@@ -20,6 +20,13 @@ export default class Header extends Component {
                         </ul>
 
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
+                            <li><Link to="/academia/funcionario">Funcionário</Link></li>
+                        </ul>
+                        <ul id="menu-mobile" className="side-nav">
+                            <li><Link to="/academia/funcionario">Funcionário</Link></li>
+                        </ul>
+
+                        <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><Link to="/academia/matricula">Matrícula</Link></li>
                         </ul>
                         <ul id="menu-mobile" className="side-nav">
