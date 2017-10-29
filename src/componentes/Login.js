@@ -21,7 +21,7 @@ export default class Login extends Component {
             })
         };
 
-        fetch(`http://localhost:8080/login?nome=${this.login.value}&senha=${this.senha.value}`, requestInfo)
+        fetch(`http://localhost:8080/login?email=${this.login.value}&senha=${this.senha.value}`, requestInfo)
             .then(response => {
                 if (response.ok) {
                     let token = response.headers.get("Authorization").replace("token ", "");
@@ -53,7 +53,7 @@ export default class Login extends Component {
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <input type="text" ref={input => this.login = input}/>
-                                        <label>Usuário</label>
+                                        <label>E-mail</label>
                                     </div>
                                 </div>
                                 <div className="row ">
