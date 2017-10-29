@@ -17,6 +17,7 @@ class FormularioRestricoes extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.enviaForm = this.enviaForm.bind(this);
         this.resetForm = this.resetForm.bind(this);
+        this.isRestricaoValida = this.isRestricaoValida.bind(this);
     }
 
     resetForm() {
@@ -33,8 +34,19 @@ class FormularioRestricoes extends Component {
         });
     }
 
+    isRestricaoValida(restricaoNova){
+        let restricaoFound = this.props.restricoes.find(restricao => restricao.descricao === restricaoNova);
+        return restricaoFound === undefined;
+    }
+
     enviaForm(event) {
         event.preventDefault();
+
+        let isRestricaoValida = this.isRestricaoValida(this.state.descricao);
+        if(!isRestricaoValida) {
+            this.setState({msgErro: "A restrição já existe."});
+            return;
+        }
 
         const requestInfo = {
             method: 'POST',
@@ -209,7 +221,7 @@ export default class RestricoesBox extends Component {
     render() {
         return (
             <div>
-                <FormularioRestricoes/>
+                <FormularioRestricoes restricoes={this.state.restricoes}/>
                 <TabelaRestricoes restricoes={this.state.restricoes}/>
             </div>
         );
