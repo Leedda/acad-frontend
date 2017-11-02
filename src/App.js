@@ -15,9 +15,9 @@ class App extends Component {
             <div className="row">
                 <Header/>
 
-                <div className="main col s12">
+                <main className="main">
                     {this.props.children}
-                </div>
+                </main>
             </div>
         );
     }
