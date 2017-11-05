@@ -16,16 +16,41 @@ export default class Header extends Component {
                     </li>
 
                     <li><Link to="/academia">Dashboard</Link></li>
-                    <li><Link to="/academia/cadastro">Cadastro</Link></li>
-                    <li><Link to="/academia/restricoes">Restrições</Link></li>
-                    <li><Link to="/academia/funcionario">Funcionário</Link></li>
-                    <li><Link to="/academia/matricula">Matrícula</Link></li>
-                </ul>
 
+                    <ul className="collapsible" data-collapsible="accordion">
+                        <li>
+                            <div className="collapsible-header waves-effect">Cadastro</div>
+                            <div className="collapsible-body">
+                                <ul>
+                                    <li id="users_seller">
+                                        <Link to="/academia/cadastro">Cliente/Funcionário</Link>
+                                    </li>
+                                    <li id="users_customer">
+                                        <Link to="/academia/restricoes">Restrições</Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="collapsible-header waves-effect">Gerenciamento</div>
+                            <div className="collapsible-body">
+                                <ul>
+                                    <li id="users_seller">
+                                        <Link to="/academia/funcionario">Funcionário</Link>
+                                    </li>
+                                    <li id="users_customer">
+                                        <Link to="/academia/matricula">Matrícula</Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                </ul>
 
                 <header>
                     <ul className="dropdown-content" id="user_dropdown">
-                        <li><a className="red-text text-lighten-2">Profile</a></li>
+                        <li><a className="red-text text-lighten-2">Meu Cadastro</a></li>
                         <li><Link className="red-text text-lighten-2" to="/academia/logout">Logout</Link></li>
                     </ul>
 
@@ -35,18 +60,15 @@ export default class Header extends Component {
 
                             <ul className="right hide-on-med-and-down">
                                 <li>
-                                    <a className='right dropdown-button' href='' data-activates='user_dropdown'><i className=' material-icons'>account_circle</i></a>
+                                    <a className='right dropdown-button' data-activates='user_dropdown'><i className=' material-icons'>account_circle</i></a>
                                 </li>
                             </ul>
 
                             <a data-activates="slide-out" className="button-collapse"><i className="mdi-navigation-menu"></i></a>
                         </div>
                     </nav>
-
                 </header>
-
             </div>
-
         );
     }
 }

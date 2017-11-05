@@ -18,3 +18,17 @@ header, main, footer {
     height: 64px;
     justify-content: center;
 }
+
+.card-dashboard {
+    padding: 35px;
+}
+
+.side-nav .collapsible-header, .side-nav.fixed .collapsible-header {
+    padding: 0 30px;
+    font-weight: 500;
+}
+
+.side-nav .collapsible-body li a, .side-nav.fixed .collapsible-body li a {
+    padding: 0 37.5px 0 45px;
+    font-weight: 400;
+}

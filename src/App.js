@@ -7,7 +7,10 @@ import Header from "./componentes/Header";
 class App extends Component {
 
     componentDidMount() {
-        $(".button-collapse").sideNav();
+        $(".button-collapse").sideNav({
+            closeOnClick: true
+        });
+        $('.collapsible').collapsible();
     }
 
     render() {
