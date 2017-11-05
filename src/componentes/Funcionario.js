@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import PubSub from 'pubsub-js';
 import {browserHistory} from 'react-router';
 import $ from 'jquery';
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
-import Inputmask from "inputmask";
 
 class FormularioFuncionario extends Component {
     constructor(props) {
@@ -134,7 +132,7 @@ class FormularioFuncionario extends Component {
     render() {
         return (
             <div>
-                <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
+                <form className="col s12 m12 l6 offset-l3" onSubmit={this.enviaForm} method="POST">
                     {
                         this.state.msgErro.length > 0 &&
                         <div className="card-panel red lighten-1">

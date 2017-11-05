@@ -8,6 +8,7 @@ import RestricoesBox from './componentes/Restricoes';
 import MatriculaBox from './componentes/Matricula';
 import FuncionarioBox from './componentes/Funcionario';
 import Logout from './componentes/Logout';
+import './css/geral.css';
 import registerServiceWorker from './registerServiceWorker';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import {matchPattern} from 'react-router/lib/PatternUtils';

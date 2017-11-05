@@ -151,7 +151,7 @@ class CadastroFormulario extends Component {
         }, placeholder: " "}).mask($('#telefone'));
 
         return (
-            <form className="col s6 offset-s3" onSubmit={this.enviaForm} method="POST">
+            <form className="col s12 m12 l6 offset-l3" onSubmit={this.enviaForm} method="POST">
                 {
                     this.state.msgErro.length > 0 &&
                     <div className="card-panel red lighten-1">
