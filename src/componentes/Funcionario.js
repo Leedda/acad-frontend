@@ -178,7 +178,7 @@ class FormularioFuncionario extends Component {
                             <input id="cargaHorarioMensal" name="cargaHorarioMensal" type="number"
                                    value={this.state.cargaHorarioMensal}
                                    onInput={this.handleInputChangeSalario} required/>
-                            <label htmlFor="cargaHorarioMensal">Carga Horário Mensal</label>
+                            <label htmlFor="cargaHorarioMensal" className="active">Carga Horário Mensal</label>
                         </div>
 
                         <div className="input-field col s6">
@@ -199,15 +199,15 @@ class FormularioFuncionario extends Component {
                             <input id="valorHora" name="valorHora" type="number"
                                    value={this.state.valorHora}
                                    onInput={this.handleInputChangeSalario} required/>
-                            <label htmlFor="valorHora">Valor Hora</label>
+                            <label htmlFor="valorHora" className="active">Valor Hora</label>
                         </div>
 
 
                         <div className="input-field col s6">
                             <input id="salario" name="salario" type="number"
                                    value={this.state.salario}
-                                   onChange={this.handleInputChange} disabled/>
-                            <label htmlFor="salario">Salário</label>
+                                   disabled/>
+                            <label htmlFor="salario" className="active">Salário</label>
                         </div>
                     </div>
 
@@ -318,6 +318,13 @@ export default class FuncionarioBox extends Component {
             .then(body => {
                 this.setState({funcionarios: body._embedded.users});
                 $('#usuario').material_select();
+            })
+            .catch(error => {
+                if (localStorage.getItem('auth-token')) {
+                    this.setState({msgErro: error.message})
+                } else {
+                    browserHistory.push("/?msg=Seu tempo de login expirou");
+                }
             });
 
         // PubSub.subscribe('atualiza-lista-clientes-matricula', function (topico, novaRestricao) {

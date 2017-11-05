@@ -24,7 +24,7 @@ header, main, footer {
 }
 
 .side-nav .collapsible-header, .side-nav.fixed .collapsible-header {
-    padding: 0 30px;
+    padding: 0 32px;
     font-weight: 500;
 }
 

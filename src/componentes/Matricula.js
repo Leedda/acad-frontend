@@ -179,8 +179,8 @@ class FormularioMatricula extends Component {
                     <div className="row">
                         <div className="input-field col s12">
                             <textarea id="observacao" name="observacao" type="text"
-                                   value={this.state.observacao} className="materialize-textarea"
-                                   onChange={this.handleInputChange}/>
+                                      value={this.state.observacao} className="materialize-textarea"
+                                      onChange={this.handleInputChange}/>
                             <label htmlFor="observacao">Observações</label>
                         </div>
                     </div>
@@ -283,6 +283,13 @@ export default class MatriculaBox extends Component {
             .then(body => {
                 this.setState({clientes: body._embedded.users});
                 $('#usuario').material_select();
+            })
+            .catch(error => {
+                if (localStorage.getItem('auth-token')) {
+                    this.setState({msgErro: error.message})
+                } else {
+                    browserHistory.push("/?msg=Seu tempo de login expirou");
+                }
             });
 
         // PubSub.subscribe('atualiza-lista-clientes-matricula', function (topico, novaRestricao) {
