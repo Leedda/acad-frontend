@@ -34,7 +34,7 @@ class FormularioRestricoes extends Component {
         });
     }
 
-    isRestricaoValida(restricaoNova){
+    isRestricaoValida(restricaoNova) {
         let restricaoFound = this.props.restricoes.find(restricao => restricao.descricao === restricaoNova);
         return restricaoFound === undefined;
     }
@@ -43,7 +43,7 @@ class FormularioRestricoes extends Component {
         event.preventDefault();
 
         let isRestricaoValida = this.isRestricaoValida(this.state.descricao);
-        if(!isRestricaoValida) {
+        if (!isRestricaoValida) {
             this.setState({msgErro: "A restrição já existe."});
             return;
         }
@@ -142,6 +142,13 @@ class TabelaRestricoes extends Component {
                     throw new Error("Não foi possível excluir uma restrição.");
                 }
             })
+            .catch(error => {
+                if (localStorage.getItem('auth-token')) {
+                    this.setState({msgErro: error.message})
+                } else {
+                    browserHistory.push("/?msg=Seu tempo de login expirou");
+                }
+            });
     }
 
     render() {
@@ -214,6 +221,13 @@ export default class RestricoesBox extends Component {
                 })
                 .then(body => {
                     this.setState({restricoes: body._embedded.restricoes});
+                })
+                .catch(error => {
+                    if (localStorage.getItem('auth-token')) {
+                        this.setState({msgErro: error.message})
+                    } else {
+                        browserHistory.push("/?msg=Seu tempo de login expirou");
+                    }
                 });
         }.bind(this));
     }
