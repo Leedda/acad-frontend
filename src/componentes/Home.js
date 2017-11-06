@@ -16,19 +16,28 @@ export default class Home extends Component {
 
                             <div className="row">
                                 <Link to="/academia/cadastro">
-                                    <div className="grey lighten-3 col s6 waves-effect center-align">
+                                    <div className="col s6 waves-effect center-align">
                                         <i className="red-text text-lighten-1 large material-icons">person</i>
                                         <span className="red-text text-lighten-1"><h5>Cliente/Funcionário</h5></span>
                                     </div>
                                 </Link>
 
                                 <Link to="/academia/restricoes">
-                                    <div className="grey lighten-3 col s6 waves-effect center-align">
+                                    <div className="col s6 waves-effect center-align">
                                         <i className="red-text text-lighten-1 large material-icons">not_interested</i>
                                         <span className="red-text text-lighten-1"><h5>Restrições</h5></span>
                                     </div>
                                 </Link>
                             </div>
+                            <div className="row">
+                                <Link to="/academia/planos">
+                                    <div className="col s6 waves-effect center-align">
+                                        <i className="red-text text-lighten-1 large material-icons">payment</i>
+                                        <span className="red-text text-lighten-1"><h5>Planos</h5></span>
+                                    </div>
+                                </Link>
+                            </div>
+
                         </div>
                     </div>
 
@@ -41,14 +50,14 @@ export default class Home extends Component {
                             </div>
                             <div className="row">
                                 <Link to="/academia/funcionario">
-                                    <div className="grey lighten-3 col s6 waves-effect center-align">
+                                    <div className="col s6 waves-effect center-align">
                                         <i className="red-text text-lighten-1 large material-icons">work</i>
                                         <span className="red-text text-lighten-1"><h5>Funcionário</h5></span>
                                     </div>
                                 </Link>
 
                                 <Link to="/academia/matricula">
-                                    <div className="grey lighten-3 col s6 waves-effect center-align">
+                                    <div className="col s6 waves-effect center-align">
                                         <i className="red-text text-lighten-1 large material-icons">assignment</i>
                                         <span className="red-text text-lighten-1"><h5>Matrícula</h5></span>
                                     </div>

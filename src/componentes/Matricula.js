@@ -157,9 +157,15 @@ class FormularioMatricula extends Component {
                         <div className="input-field col s6">
                             <select id="planoPagamento" name="planoPagamento" value={this.state.planoPagamento}
                                     onChange={this.handleInputChange} required>
-                                <option value="5xsemana">5x por semana - R$ 100,00</option>
-                                <option value="3xsemana">3x por semana - R$ 80,00</option>
-                                <option value="2xsemana">2x por semana - R$ 70,00</option>
+
+                                {
+                                    this.props.planos.map(function (plano) {
+                                        return (
+                                            <option key={plano._links.self.href}
+                                                    value={plano._links.self.href}>{plano.descricao} - {plano.formaDePagamento}</option>
+                                        )
+                                    })
+                                }
                             </select>
 
                             <label htmlFor="planoPagamento">Plano de Pagamento</label>
@@ -261,7 +267,7 @@ export default class MatriculaBox extends Component {
 
     constructor() {
         super();
-        this.state = {clientes: []};
+        this.state = {clientes: [], planos: []};
     }
 
     componentDidMount() {
@@ -292,6 +298,26 @@ export default class MatriculaBox extends Component {
                 }
             });
 
+        fetch(`http://localhost:8080/planos`, requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Não foi possível buscar os planos.");
+                }
+            })
+            .then(body => {
+                this.setState({planos: body._embedded.planos});
+                $('#planoPagamento').material_select();
+            })
+            .catch(error => {
+                if (localStorage.getItem('auth-token')) {
+                    this.setState({msgErro: error.message})
+                } else {
+                    browserHistory.push("/?msg=Seu tempo de login expirou");
+                }
+            });
+
         // PubSub.subscribe('atualiza-lista-clientes-matricula', function (topico, novaRestricao) {
         //     fetch(`http://localhost:8080/clientes`, requestInfo)
         //         .then(response => {
@@ -310,7 +336,7 @@ export default class MatriculaBox extends Component {
     render() {
         return (
             <div>
-                <FormularioMatricula clientes={this.state.clientes}/>
+                <FormularioMatricula clientes={this.state.clientes} planos={this.state.planos}/>
                 {/*<TabelaRestricoes restricoes={this.state.restricoes}/>*/}
             </div>
         );
