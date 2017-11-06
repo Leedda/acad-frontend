@@ -28,6 +28,9 @@ export default class Header extends Component {
                                     <li id="users_customer">
                                         <Link to="/academia/restricoes">Restrições</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/academia/planos">Planos</Link>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

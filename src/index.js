@@ -5,6 +5,7 @@ import Login from './componentes/Login';
 import Home from './componentes/Home';
 import CadastroBox from './componentes/Cadastro';
 import RestricoesBox from './componentes/Restricoes';
+import PlanosBox from './componentes/Plano';
 import MatriculaBox from './componentes/Matricula';
 import FuncionarioBox from './componentes/Funcionario';
 import Logout from './componentes/Logout';
@@ -29,6 +30,7 @@ ReactDOM.render(
             <IndexRoute component={Home}/>
             <Route path="cadastro" component={CadastroBox}/>
             <Route path="restricoes" component={RestricoesBox}/>
+            <Route path="planos" component={PlanosBox}/>
             <Route path="matricula" component={MatriculaBox}/>
             <Route path="funcionario" component={FuncionarioBox}/>
             <Route path="logout" component={Logout}/>
